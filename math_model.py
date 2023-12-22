@@ -4,14 +4,13 @@ from scipy import integrate
 from scipy import constants
 
 # данные
-m0 = 133391 #масса без топлива
+m0 = 133391  # масса без топлива
 M = 190000  # масса с топливом
-Cf = 0.5 #сопротивление
+Cf = 0.5  # сопротивление
 ro = 1.293  # плотность воздуха
-S = constants.pi * ((2.5 / 2) ** 2) #площадь сечения
+S = constants.pi * ((2.5 / 2) ** 2)  # площадь сечения
 g = 1.00034 * constants.g
-F = [5668630, 6642420, 7668630]
-
+F = [4368630, 1107000]
 
 
 def dv_dt(t, v):
@@ -20,25 +19,18 @@ def dv_dt(t, v):
         m0 = 133391
         Ft = F[0]
         k = (M - m0) / (5.17 * 60)
-        return ((Ft / (M - k * t)) - ((Cf * ro * S) / (2 * (M - k * t))) * v ** 2 - g)
-    if t < 300:
-        M = 83391
+        return ((Ft / (M - k * t)) + ((Cf * ro * S) / (2 * (M - k * t))) * v ** 2 - g)
+    if t < 105:
+        M = 92000
         m0 = 60102
         Ft = F[1]
-        k = (M - m0) / (5.17 * 60)
-        return ((Ft / (M - k * t)) - ((Cf * ro * S) / (2 * (M - k * t))) * v ** 2 - g)
-    if t < 315:
-        M = 597
-        m0 = 561
-        Ft = F[2]
-        k = (M - m0) / (5.17 * 60)
-        return ((Ft / (M - k * t)) - ((Cf * ro * S) / (2 * (M - k * t))) * v ** 2 - g)
-
+        k = (M - m0) / (4.66 * 60)
+        return ((Ft / (M - k * t)) + ((Cf * ro * S) / (2 * (M - k * t))) * v ** 2 - g)
 
 
 v0 = 0
 
-t = np.linspace(0, 335, 315)
+t = np.linspace(0, 180, 315)
 
 solve = integrate.solve_ivp(dv_dt, t_span=(0, max(t)), y0=[v0], t_eval=t)
 
