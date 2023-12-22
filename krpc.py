@@ -19,9 +19,9 @@ while True:
     speed_values.append(speed)
     print("Время: {}, Скорость корабля: {} м/с".format(time, speed))
 
-    # Проверка условия завершения сбора данных 
+    # Проверка условия завершения сбора данных
     altitude = vessel.flight().surface_altitude
-    if altitude > 130000:  # Условие окончания программы 
+    if altitude > 40000:  # Условие окончания программы
         break
 
 # Построение графика скорости от времени
